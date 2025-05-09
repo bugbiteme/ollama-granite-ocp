@@ -1,6 +1,6 @@
 # ollama-granite-ocp
 
-Demo for running Granite LLM on OpenShift using [Ollama](https://ollama.com) and accessing it via [Open WebUI](https://github.com/open-webui/open-webui).
+Demo for running LLMs on OpenShift using [Ollama](https://ollama.com) and accessing it via [Open WebUI](https://github.com/open-webui/open-webui).
 
 ## Overview
 
