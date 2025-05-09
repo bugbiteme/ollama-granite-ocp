@@ -15,4 +15,20 @@ oc apply -k k8/base
 ```
 
 There aren't any overlays at the moment, so you can run `oc apply -f k8/base` instead if you choose.
+  
+Once deployed, run the command:
+```bash
+oc get routes   
+```
+
+to get to the Open WebUI interface URL
+
+example:
+```bash
+oc get routes                                                                             
+NAME         HOST/PORT
+open-webui   open-webui-ollama-granite-demo.apps.<domain>
+```
+
+When you go to the URL for the first time, the web page will ask you to create an admin account to log in.
 
