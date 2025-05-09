@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ollama
+    app.openshift.io/runtime: ubuntu
+    app.kubernetes.io/component: ollama
+    app.kubernetes.io/instance: ollama
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/part-of: ai-demo
+    app.openshift.io/runtime-namespace: ollama-granite-demo
+  name: ollama
+  namespace: ollama-granite-demo
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ollama
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      labels:
+        app: ollama
+        deployment: ollama
+    spec:
+      containers:
+      - name: ollama
+        image: docker.io/ollama/ollama:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 11434
+          protocol: TCP
+        env:
+        - name: MODELS
+          valueFrom:
+            configMapKeyRef:
+              name: ollama-config
+              key: MODELS
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - |
+                for model in $(echo "$MODELS"); do
+                  ollama pull "$model" || echo "failed to pull $model"
+                done
+        volumeMounts:
+        - mountPath: /.ollama
+          name: pvc-ollama
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: pvc-ollama
+        persistentVolumeClaim:
+          claimName: pvc-ollama

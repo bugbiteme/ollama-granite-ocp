@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ollama-config
+  namespace: ollama-granite-demo
+data:
+  MODELS: |
+    granite3.3:8b
+    mistral
+    llama3

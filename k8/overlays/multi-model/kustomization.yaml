@@ -1,0 +1,10 @@
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - path: config-ollama.yaml
+  - path: deployment-ollama.yaml
+
+namespace: multi-model
