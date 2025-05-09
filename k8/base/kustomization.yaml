@@ -1,0 +1,13 @@
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - config-ollama.yaml
+  - config-open-webui.yaml
+  - pvc-ollama.yaml
+  - pvc-openwebui.yaml
+  - deployment-ollama.yaml
+  - deployment-open-webui.yaml
+  - service-ollama.yaml
+  - service-open-webui.yaml
+  - route-open-webui.yaml
